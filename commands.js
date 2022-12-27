@@ -1,4 +1,6 @@
-const Discord = require('discord.js');
+require('dotenv').config();
+const BSC_API_Key = process.env.BSC_API_Key
+const ETHER_API_Key = process.env.ETHER_API_Key
 const APICall = require('./utils/apiCall');
 const Table = require('table').table;
 
@@ -54,7 +56,27 @@ const trendingTokens = async (msg) => {
 }
 
 const tokenVerify = async (msg, args) => {
+    const smartContractAddress = args[0]
+    const BSC_Verification_URL = `https://api.bscscan.com/api?module=contract&action=getabi&address=${smartContractAddress}&apikey=${BSC_API_Key}`
+    const ETHER_Verification_URL = `https://api.etherscan.io/api?module=contract&action=getabi&address=${smartContractAddress}&apikey=${ETHER_API_Key}`
+    const BSC_responses = await APICall.apiCallURL(BSC_Verification_URL)
+    const ETHER_responses = await APICall.apiCallURL(ETHER_Verification_URL)
+    
+    if(BSC_responses.error || ETHER_responses.error){
+        return `Sorry ${msg.author}, I am unable to fetch the data. Please try again later.`;
+    }
 
+    Verified = BSC_responses.status == '1' || ETHER_responses.status == '1'
+    verifiedBSCToken = BSC_responses.status == '1'
+    verifiedEtherToken = ETHER_responses.status == '1'
+
+    if(Verified){
+        return (`Yes, ${msg.author} this token is verified.\n`+
+        "```\nSmart Contract Address: "+smartContractAddress+"\nVerified:"+Verified+"\nVerified on BSC Network: "+verifiedBSCToken+"\nVerified on Ethereum Network: "+verifiedEtherToken+"\n```")
+    }else{
+        return (`No, ${msg.author} this token is not verified.\n`+
+        "```\nSmart Contract Address: "+smartContractAddress+"\nVerified:"+Verified+"\nVerified on BSC Network: "+verifiedBSCToken+"\nVerified on Ethereum Network: "+verifiedEtherToken+"\n```")
+    }
 }
 
 const lastTransactions = async (msg, args) => {
