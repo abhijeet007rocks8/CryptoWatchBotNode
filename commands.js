@@ -87,17 +87,42 @@ const lastTransactions = async (msg, args) => {
 const tokenPrice = async (msg, args) => {
     const network = args[0];
     const smartContractAddress = args[1];
-    console.log(network, smartContractAddress);
     const query = Queries.makeQueryLatestPrice(smartContractAddress, network);
     const response = await APICall.sendRequest(query);
     
+    if(response.error){
+        return `Sorry ${msg.author}, I am unable to fetch the data. Please try again later.`;
+    }
+
     const tokenSymbol = response.ethereum.dexTrades[0].baseCurrency.symbol;
     const latestPrice = response.ethereum.dexTrades[0].quotePrice;
     return `${msg.author} Latest Price of ${tokenSymbol} in USD is:\n`+"```"+`Current Price: $${latestPrice}`+"```";
 }
 
 const tokenLiquidity = async (msg, args) => {
+    const network = args[0];
+    const smartContractAddress = args[1];
+    let query = Queries.makeQueryTotalSupplies(smartContractAddress, network);
+    let response = await APICall.sendRequest(query);
 
+    if(response.error){
+        return `Sorry ${msg.author}, I am unable to fetch the data. Please try again later.`;
+    }
+
+    const totalSupply = response.ethereum.transfers[0].amount;
+    
+    query = Queries.makeQueryLatestPrice(smartContractAddress, network);
+
+    if(response.error){
+        return `Sorry ${msg.author}, I am unable to fetch the data. Please try again later.`;
+    }
+
+    response = await APICall.sendRequest(query);
+    const tokenSymbol = response.ethereum.dexTrades[0].baseCurrency.symbol;
+    const latestPrice = response.ethereum.dexTrades[0].quotePrice;
+    const market_cap = parseFloat(totalSupply) * parseFloat(latestPrice);
+
+    return `${msg.author} Liquidity Info for ${tokenSymbol} is:\n`+"```"+`Current Price: $${latestPrice}\nMarket Cap: $${market_cap}\nTotal Supply: ${totalSupply}\nContract Address: ${smartContractAddress}`+"```";
 }
 
 const tokenInfo = async (msg, args) => {

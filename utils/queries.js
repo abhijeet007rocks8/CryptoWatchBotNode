@@ -60,7 +60,7 @@ function makeQueryTokenInfo(network, token) {
     }`
   }
   
-  function makeQueryTotalSupplies(network, token){
+  function makeQueryTotalSupplies(token, network){
       return `
       {
           ethereum(network: ${network}) {
