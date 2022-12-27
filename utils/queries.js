@@ -330,7 +330,6 @@ function makeQueryTokenInfo(network, token) {
   }
   
   module.exports = {
-      sendRequest,
       makeQueryTokenInfo,
       makeQueryTokensInfo,
   

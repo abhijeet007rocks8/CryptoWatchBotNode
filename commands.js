@@ -2,6 +2,7 @@ require('dotenv').config();
 const BSC_API_Key = process.env.BSC_API_Key
 const ETHER_API_Key = process.env.ETHER_API_Key
 const APICall = require('./utils/apiCall');
+const Queries = require('./utils/queries');
 const Table = require('table').table;
 
 const ping = async (msg) => {
@@ -84,7 +85,15 @@ const lastTransactions = async (msg, args) => {
 }
 
 const tokenPrice = async (msg, args) => {
-
+    const network = args[0];
+    const smartContractAddress = args[1];
+    console.log(network, smartContractAddress);
+    const query = Queries.makeQueryLatestPrice(smartContractAddress, network);
+    const response = await APICall.sendRequest(query);
+    
+    const tokenSymbol = response.ethereum.dexTrades[0].baseCurrency.symbol;
+    const latestPrice = response.ethereum.dexTrades[0].quotePrice;
+    return `${msg.author} Latest Price of ${tokenSymbol} in USD is:\n`+"```"+`Current Price: $${latestPrice}`+"```";
 }
 
 const tokenLiquidity = async (msg, args) => {
