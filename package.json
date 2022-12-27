@@ -20,6 +20,7 @@
     "axios": "^1.2.1",
     "discord.js": "^11.5.1",
     "dotenv": "^16.0.3",
-    "text-table": "^0.2.0"
+    "node-fetch": "^3.3.0",
+    "table": "^6.8.1"
   }
 }
