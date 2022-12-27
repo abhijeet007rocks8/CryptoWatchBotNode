@@ -1,4 +1,4 @@
-function makeQueryTokenInfo(network, token) {
+function makeQueryTokenInfo(token, network) {
     return `
     {
       ethereum(network: ${network}) {

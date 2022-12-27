@@ -45,7 +45,7 @@ bot.on('message', async msg => {
         case 'liquidity':
           response = await commands.tokenLiquidity(msg, args);
           break;
-        case 'tokenInfo':
+        case 'tokeninfo':
           response = await commands.tokenInfo(msg, args);
           break;
         case 'search':

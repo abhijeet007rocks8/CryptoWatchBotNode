@@ -126,7 +126,20 @@ const tokenLiquidity = async (msg, args) => {
 }
 
 const tokenInfo = async (msg, args) => {
+    const network = args[0];
+    const smartContractAddress = args[1];
+    const query = Queries.makeQueryTokenInfo(smartContractAddress, network);
+    const response = await APICall.sendRequest(query);
 
+    if(response.error){
+        return `Sorry ${msg.author}, I am unable to fetch the data. Please try again later.`;
+    }
+
+    const tokenName = response.ethereum.smartContractCalls[0].smartContract.currency.name;
+    const tokenSymbol = response.ethereum.smartContractCalls[0].smartContract.currency.symbol;
+    const tokenType = response.ethereum.smartContractCalls[0].smartContract.currency.tokenType;
+    const tokenDecimals = response.ethereum.smartContractCalls[0].smartContract.currency.decimals;
+    return `${msg.author} Token Info for ${tokenSymbol} is:\n`+"```"+`Token Name: ${tokenName}\nToken Symbol: ${tokenSymbol}\nToken Type: ${tokenType}\nToken Decimals: ${tokenDecimals}\n`+"```";
 }
 
 const searchToken = async (msg, args) => {
