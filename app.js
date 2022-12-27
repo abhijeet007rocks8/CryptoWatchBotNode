@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 const TOKEN = process.env.TOKEN;
 const prefix = "!";
+const commands = require('./commands');
 
 bot.login(TOKEN);
 
@@ -10,27 +11,51 @@ bot.on('ready', () => {
   console.info(`Logged in as ${bot.user.tag}!`);
 });
 
-bot.on('message', msg => {
+bot.on('message', async msg => {
     if (!msg.content.startsWith(prefix) || msg.author.bot) return; 
 
     const args = msg.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
-    console.log(args);
-    console.log(command);
-
-    
-
-    // if (msg.content === 'ping') {
-    //     msg.reply('pong');
-    //     msg.channel.send('pong');
-
-    // } else if (msg.content.startsWith('!kick')) {
-    //     if (msg.mentions.users.size) {
-    //     const taggedUser = msg.mentions.users.first();
-    //     msg.channel.send(`You wanted to kick: ${taggedUser.username}`);
-    //     } else {
-    //     msg.reply('Please tag a valid user!');
-    //     }
-    // }
+    // console.log(args);
+    // console.log(command);
+  
+    switch (command) {
+        case 'ping':
+          response = await commands.ping(msg);
+          break;
+        case 'hello':
+          response = await commands.hello(msg);
+          break;
+        case 'top':
+          response = await commands.topTokens(msg, args);
+          break;
+        case 'trending':
+          response = await commands.trendingTokens(msg);
+          break;
+        case 'tokenverify':
+          response = await commands.tokenVerify(msg, args);
+          break;
+        case 'lasttransactions':
+          response = await commands.lastTransactions(msg, args);
+          break;
+        case 'price':
+          response = await commands.tokenPrice(msg, args);
+          break;
+        case 'liquidity':
+          response = await commands.tokenLiquidity(msg, args);
+          break;
+        case 'tokenInfo':
+          response = await commands.tokenInfo(msg, args);
+          break;
+        case 'search':
+          response = await commands.searchToken(msg, args);
+          break;
+        case 'help':
+          response = await commands.help(msg, bot);
+          break;
+        default:
+          response = await commands.defaultReply(msg);
+      }
+      msg.channel.send(response);
 });

@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/abhijeet007rocks8/CryptoWatchBotNode#readme",
   "dependencies": {
+    "axios": "^1.2.1",
     "discord.js": "^11.5.1",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "text-table": "^0.2.0"
   }
 }
