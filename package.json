@@ -1,0 +1,23 @@
+{
+  "name": "cryptowatchbotnode",
+  "version": "1.0.0",
+  "description": "CryptoWatchBOt Code",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhijeet007rocks8/CryptoWatchBotNode.git"
+  },
+  "author": "Abhijeet Chatterjee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abhijeet007rocks8/CryptoWatchBotNode/issues"
+  },
+  "homepage": "https://github.com/abhijeet007rocks8/CryptoWatchBotNode#readme",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "dotenv": "^16.0.3"
+  }
+}
