@@ -46,7 +46,6 @@ const trendingTokens = async (msg) => {
     let tableData = [['Rank', 'Name', 'Symbol', 'Price']];
     for(let i=0; i<responses.length; i++) {
         const response = responses[i].item;
-        // round price to 4 decimal places
         let price = Math.round(response.price_btc *20355.745 * 10000) / 10000;
         let tokenName = response.name.length > 7 ? response.name.substring(0, 7) + "..." : response.name;
         tableData.push([tokenName, response.symbol, response.market_cap_rank, `$${price}`]);
@@ -81,7 +80,44 @@ const tokenVerify = async (msg, args) => {
 }
 
 const lastTransactions = async (msg, args) => {
+    const network = args[0]
+    const smartContractAddress = args[1]
+    const query = Queries.makeTransactionsQuery(smartContractAddress, network)
+    let response = await APICall.sendRequest(query)
+    
+    // Error Handling
+    if (response === undefined) {
+        return `Sorry ${msg.author}, I am unable to fetch the data. Please try again later.`;
+    }
 
+    response = response.ethereum.dexTrades
+
+    if (response === null || response.length == 0) {
+        return `Sorry ${msg.author}, I am unable to fetch the data. Please try again later.`;
+    }
+
+    let tableData1 = [['Type', 'Base', 'Price', 'Quote']];
+    let tableData2 = [['Type', 'Base', 'Price', 'Quote']];
+    
+    for(let i=0; i<response.length; i++) {
+        let transactionType = response[i].side
+        let baseTokenAmount = (transactionType == 'SELL')? response[i].sellAmount: response[i].buyAmount;
+        let otherTokenAmount = (transactionType == 'SELL')? response[i].buyAmount: response[i].sellAmount;
+        let otherToken = response[i].quoteCurrency.symbol
+        let baseCurrency = response[i].baseCurrency.symbol
+        let TransactionAmount = response[i].tradeAmount
+        baseTokenAmount = Math.round(baseTokenAmount * 1000) / 1000;
+        otherTokenAmount = Math.round(otherTokenAmount * 1000) / 1000;
+        TransactionAmount = Math.round(TransactionAmount * 100) / 100;
+        if(i<5)
+        tableData1.push([transactionType, baseTokenAmount+baseCurrency, "$"+TransactionAmount, otherTokenAmount+otherToken ])
+        else
+        tableData2.push([transactionType, baseTokenAmount+baseCurrency, "$"+TransactionAmount, otherTokenAmount+otherToken ])
+    }
+    
+    let table1 = Table(tableData1);
+    let table2 = Table(tableData2);
+    return [table1, table2];
 }
 
 const tokenPrice = async (msg, args) => {
@@ -90,7 +126,7 @@ const tokenPrice = async (msg, args) => {
     const query = Queries.makeQueryLatestPrice(smartContractAddress, network);
     const response = await APICall.sendRequest(query);
     
-    if(response.error){
+    if(response === undefined){
         return `Sorry ${msg.author}, I am unable to fetch the data. Please try again later.`;
     }
 
@@ -105,19 +141,19 @@ const tokenLiquidity = async (msg, args) => {
     let query = Queries.makeQueryTotalSupplies(smartContractAddress, network);
     let response = await APICall.sendRequest(query);
 
-    if(response.error){
+    if(response === undefined){
         return `Sorry ${msg.author}, I am unable to fetch the data. Please try again later.`;
     }
 
     const totalSupply = response.ethereum.transfers[0].amount;
     
     query = Queries.makeQueryLatestPrice(smartContractAddress, network);
+    response = await APICall.sendRequest(query);
 
-    if(response.error){
+    if(response === undefined){
         return `Sorry ${msg.author}, I am unable to fetch the data. Please try again later.`;
     }
 
-    response = await APICall.sendRequest(query);
     const tokenSymbol = response.ethereum.dexTrades[0].baseCurrency.symbol;
     const latestPrice = response.ethereum.dexTrades[0].quotePrice;
     const market_cap = parseFloat(totalSupply) * parseFloat(latestPrice);
@@ -131,7 +167,7 @@ const tokenInfo = async (msg, args) => {
     const query = Queries.makeQueryTokenInfo(smartContractAddress, network);
     const response = await APICall.sendRequest(query);
 
-    if(response.error){
+    if(response === undefined){
         return `Sorry ${msg.author}, I am unable to fetch the data. Please try again later.`;
     }
 

@@ -38,6 +38,10 @@ bot.on('message', async msg => {
           break;
         case 'lasttransactions':
           response = await commands.lastTransactions(msg, args);
+          if(Array.isArray(response)){
+            msg.channel.send(`${msg.author} Last 10 Transactions of ${args[1]}:\n`+"```"+response[0]+"```");
+            msg.channel.send("```"+response[1]+"```");
+          }
           break;
         case 'price':
           response = await commands.tokenPrice(msg, args);
@@ -57,5 +61,8 @@ bot.on('message', async msg => {
         default:
           response = await commands.defaultReply(msg);
       }
-      msg.channel.send(response);
+
+      if(!Array.isArray(response)){
+        msg.channel.send(response);
+      }
 });
