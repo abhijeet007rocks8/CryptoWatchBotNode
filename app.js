@@ -52,7 +52,7 @@ bot.on('message', async msg => {
         case 'tokeninfo':
           response = await commands.tokenInfo(msg, args);
           break;
-        case 'search':
+        case 'searchtoken':
           response = await commands.searchToken(msg, args);
           if(Array.isArray(response)){
             msg.channel.send(`${msg.author} Token Search Result for ${args[1]} on network ${args[0]}:`);
@@ -62,6 +62,7 @@ bot.on('message', async msg => {
           break;
         case 'help':
           response = await commands.help(msg, bot);
+          msg.channel.send(`${msg.author} Here is the list of commands:`);
           break;
         default:
           response = await commands.defaultReply(msg);

@@ -223,7 +223,25 @@ const searchToken = async (msg, args) => {
 }
 
 const help = async (msg, bot) => {   
-    
+    let helpEmbed = new Discord.RichEmbed()
+    .setTitle("CryptoWatchBot Command Help")
+    .setDescription("Notice: All the commands start with '!' prefix \n If you are having any issues in the server, please contact the server admin.")
+    .setColor(0x00ff00);
+
+    helpEmbed.addField("!ping", "Command to check whether Bot is online", false);
+    helpEmbed.addField("!hello", "Command to greet the Bot", false);
+    helpEmbed.addField("!top <number> ", "Command to get the top {number} tokens by market cap", false);
+    helpEmbed.addField("!trending", "Command to get the trending tokens", false);
+    helpEmbed.addField("!tokenverify <token_symbol>", "Command to verify the Token Contract Address on BSC or ETH networks", false);
+    helpEmbed.addField("!lasttransactions <network> <Token Contract Address>", "Command to get the last 10 transactions of the token", false);
+    helpEmbed.addField("!price <network> <Token Contract Address>", "Command to get the current price of the token", false);
+    helpEmbed.addField("!liquidity <network> <Token Contract Address>", "Command to get the liquidity info of the token", false);
+    helpEmbed.addField("!tokeninfo <network> <Token Contract Address>", "Command to get the token info of the token from BlockChain network", false);
+    helpEmbed.addField("!searchtoken <network> <Token Contract Address>", "Command to get the token info of the token from CoinGecko if it exists", false);
+    helpEmbed.addField("!help", "Command to get the list of commands available in the bot", false);
+    helpEmbed.addField("Checkout our Website to get detailed Info about a Token in one place.", "https://cryptowatch-8465a.web.app/", false);
+
+    return helpEmbed;
 }
 
 const defaultReply = async (msg) => {
