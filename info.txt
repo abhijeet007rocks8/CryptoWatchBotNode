@@ -1,5 +1,11 @@
-// token: MTA1NzMwNDg4NzEyMzI1OTU0Mg.GItJ1R.UeNNaT1EOGSmnxo4711NlzucAJvs-xCi6EBJI4
-// invite link: https://discord.com/api/oauth2/authorize?client_id=1057304887123259542&permissions=534723820608&scope=bot
+// token: MTA1NzU5NTc1MjU5NzE3MjI1NA.GnKU0o.ZvQoZnrecaOu3hNb75JIH5melMz4sB5Ry4WHBY
+// invite link: https://discord.com/api/oauth2/authorize?client_id=1057595752597172254&permissions=544924499152&scope=bot%20applications.commands
+
+APPLICATION ID
+1057595752597172254
+PUBLIC KEY
+f0d679edfada4240c1a8a33a20882b44540b953c54d2fe085b3f45a95e2dece9
+
 
 
 To Deploy:

@@ -1,11 +1,10 @@
 require('dotenv').config();
 const Discord = require('discord.js');
+const commands = require('./commands');
+
 const bot = new Discord.Client();
 const TOKEN = process.env.TOKEN;
 const prefix = "!";
-const commands = require('./commands');
-
-bot.login(TOKEN);
 
 bot.on('ready', () => {
   console.info(`Logged in as ${bot.user.tag}!`);
@@ -67,8 +66,10 @@ bot.on('message', async msg => {
         default:
           response = await commands.defaultReply(msg);
       }
-
+      
       if(!Array.isArray(response)){
         msg.channel.send(response);
       }
 });
+
+bot.login(TOKEN);
