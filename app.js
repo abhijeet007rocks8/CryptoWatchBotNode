@@ -54,6 +54,11 @@ bot.on('message', async msg => {
           break;
         case 'search':
           response = await commands.searchToken(msg, args);
+          if(Array.isArray(response)){
+            msg.channel.send(`${msg.author} Token Search Result for ${args[1]} on network ${args[0]}:`);
+            msg.channel.send(response[0]);
+            msg.channel.send(response[1]);
+          }
           break;
         case 'help':
           response = await commands.help(msg, bot);

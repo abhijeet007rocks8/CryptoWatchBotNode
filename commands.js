@@ -1,9 +1,11 @@
 require('dotenv').config();
-const BSC_API_Key = process.env.BSC_API_Key
-const ETHER_API_Key = process.env.ETHER_API_Key
 const APICall = require('./utils/apiCall');
 const Queries = require('./utils/queries');
 const Table = require('table').table;
+const Discord = require('discord.js');
+
+const BSC_API_Key = process.env.BSC_API_Key
+const ETHER_API_Key = process.env.ETHER_API_Key
 
 const ping = async (msg) => {
     return `Pong! ${msg.author}`;
@@ -179,7 +181,45 @@ const tokenInfo = async (msg, args) => {
 }
 
 const searchToken = async (msg, args) => {
+    const network = args[0] == 'bsc' ? 'binance-smart-chain' : 'ethereum';
+    const token_contract_address = args[1];
+    const URL = `https://api.coingecko.com/api/v3/coins/${network}/contract/${token_contract_address}`;
+    let response = await APICall.apiCallURL(URL);
+    
+    if(response.error){
+        if(response.error == "coin not found")
+        return `Sorry ${msg.author}, I am unable to find any such coin on ${args[0]} network. Please check the token address or Network.`;
+        else
+        return `Sorry ${msg.author}, I am unable to fetch the data. Please try again later.`;
+    }
 
+    let dataEmbed = new Discord.RichEmbed()
+    .setTitle(`Token Info: ${token_contract_address}`)
+    .setDescription(`Information of the token ${token_contract_address}`)
+    .setColor(0x0000ff)
+    .setThumbnail(response.image.large);
+    
+    dataEmbed.addField("Name", response.name, true);
+    dataEmbed.addField("Symbol", response.symbol, true);
+    dataEmbed.addField("Main Network", response.asset_platform_id, true);
+    dataEmbed.addField("Contract Address", response.contract_address, false);
+    dataEmbed.addField("Current Price", "$"+response.market_data.current_price.usd, true);
+    dataEmbed.addField("Price Change in 7 days", response.market_data.price_change_percentage_7d_in_currency.usd+"%", true);
+    if(response.links.homepage[0] != undefined)
+        dataEmbed.addField("Website", response.links.homepage[0], false);
+    dataEmbed.addField("Total Supply", response.market_data.total_supply, true);
+
+
+    let descriptionEmbed = new Discord.RichEmbed()
+    .setTitle(`Token Description: ${token_contract_address}`)
+    .setDescription(`Description of the token ${token_contract_address}`)
+    .setColor(0x0000ff)
+    .setThumbnail(response.image.large);
+
+    const description = response.description.en.length > 1020 ? response.description.en.substring(0, 1020) : response.description.en;
+    descriptionEmbed.addField("Description", description, false);
+    
+    return [dataEmbed, descriptionEmbed]; 
 }
 
 const help = async (msg, bot) => {   
