@@ -1,0 +1,6 @@
+Oauth Generator:
+bot
+application.commands
+
+text permission: all
+general permissions: read/send messages
