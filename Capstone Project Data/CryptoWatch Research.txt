@@ -1,0 +1,57 @@
+https://medium.com/@Watchtower_WTW/avoiding-scams-in-cryptocurrency-and-the-rise-of-watchtower-61355d645fb2
+
+Problem Statement:
+
+Cryptocurrencies are quite a hot topic among the new generation of investors, 
+many make fortune out of Crypto-Trading while many suffer heavy losses in it. 
+While new tokens are coming out every single day, many of them are honeypots which take investors' money 
+and then dissolve. Leaving the investors in heavy losses. 
+The Game is completely based on High Risk & High Reward. 
+
+People would say the benefit of being able to buy into tokens through these exchanges is simple, 
+“You’re in early” and have the potential to make an exorbitant amount of money if they are successful.
+If you’re lucky you will find that 1 in 100 token that makes you 100x or even 1000x your investment.
+
+The clearest examples of this have been the success of Safemoon, Dogecoin, ASS finance and more recently Tiger King, 
+where Early investors realised tens of thousands of dollars from as little as $200 invested at their launch. 
+The support of Influencers and celebrities have added to the growth of these tokens and people are constantly 
+looking for the next token which shares the same characteristics.
+
+These Successes however, have paved the road for the Scammers to take advantage of unsuspecting investors who 
+without doing their own research, blindly invest into tokens that have a large following or hype, 
+only to have the opposite occur resulting in them losing their investment.
+
+The Golden Mile is paved with thousands of Scams, Rug Pulls, 
+Honey Pots and Unremorseful developers who have no identity, who hide behind alter ego’s and 
+disappear as quickly as they arrived. People looking to make quick profits are comfortable with the high-risk, 
+high reward methodology.
+
+
+But we can reduce a little risk but considering the pieces of information related to Token and 
+how it is being perceived by investors across the world the price trend etc. 
+And after considering some of the factors we can make our investment decision. 
+Now the next problem is how to find all this information.
+Also, the new tokens which release at very low prices don't have records about 
+them mentioned on the Crypto Websites because of their lack of popularity at the moment. 
+But the data is available on Ethereum or Binance networks where the tokens are released. 
+But to get that information we must have good knowledge of GraphQL and Crypto ParaDigms, 
+which is not for all. Well, that is the aim of the project.
+
+
+Types of scams:
+
+## HONEYPOTS
+A Honeypot is a type of Scam which allows people to buy tokens but prevents them from selling the token. 
+This essentially locks the Base tokens into the contract where only the Contract Owner can sell tokens and 
+drain Liquidity (Rug Pull)
+Transaction history can help you identify them.
+
+
+## Unlocked liquidity:
+This is the most common scam today. Scammers know that if they create hype by promising large returns, 
+and put effort into making flashy websites, get influencers on board and promoting themselves through 
+different mediums that they can create the perfect storm for a scam.
+The objective is to cause hype, increase awareness and create the perception that their token is the 
+next big thing. The hype leads into a Pre-sale or fair launch where people buy their tokens, increase the 
+liquidity supply and market cap for them to withdraw in an instant and steal people’s investment.
+

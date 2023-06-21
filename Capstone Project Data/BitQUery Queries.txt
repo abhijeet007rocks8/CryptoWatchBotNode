@@ -1,0 +1,65 @@
+## To search for tokens based on name on a particular network:
+query MyQuery {
+  search(string: {searchTerm} , limit: 10, network: {ethereum}, offset: 0) {
+    subject {
+      ... on Currency {
+        address
+        name
+      }
+    }
+  }
+}
+
+## Holder of a token and balance
+query HoldersQuery($network: EthereumNetwork!, $token: String!, $top: Int!) {
+  ethereum(network: $network) {
+    transfers(
+      currency: {is: $token}
+      success: true
+      options: {desc: "amount", offset: 0, limit: $top}
+    ) {
+      receiver {
+        uniq: address
+      }
+      amount
+    }
+  }
+}
+
+## Total Supply of Tokens Burned and Minted
+{
+  ethereum(network: ethereum) {
+    transfers(date: {since: null, till: "2022-01-01T20:41:07.389Z"}, amount: {gt: 0}) {
+      burned: amount(
+        calculate: sum
+        receiver: {in: ["0x0000000000000000000000000000000000000000", "0x0000000000000000000000000000000000000001", "0x000000000000000000000000000000000000dead"]}
+      )
+      minted: amount(
+        calculate: sum
+        sender: {in: ["0x0000000000000000000000000000000000000000"]}
+      )
+      contractMints: amount(
+        calculate: sum
+        sender: {in: ["0x010d0d497fe8E81e6C625AfA8091b85c08689dd3"]}
+      )
+      currency(currency: {is: "0x9d3EE6B64e69Ebe12a4bF0b01D031CB80F556eE4"}) {
+        symbol
+        name
+        address
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
